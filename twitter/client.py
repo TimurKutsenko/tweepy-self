@@ -441,7 +441,7 @@ class Client(BaseHTTPClient):
 
     async def _update_account_username(self):
         url = "https://api.x.com/1.1/account/settings.json"
-        headers = {'x-client-transaction-id': base64.b64encode(f"e:{"/1.1/account/settings.json"}".encode()).decode()}
+        headers = {'x-client-transaction-id': base64.b64encode(f"e:/1.1/account/settings.json".encode()).decode()}
         response, response_json = await self.request("POST", url, headers=headers)
         self.account.username = response_json["screen_name"]
 
