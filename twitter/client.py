@@ -439,9 +439,12 @@ class Client(BaseHTTPClient):
 
         return authenticity_token, redirect_url
 
+    def _encode_x_client_transaction_id(self, url: str) -> str:
+        return base64.b64encode(f"e:{url}".encode()).decode()
+
     async def _update_account_username(self):
         url = "https://api.x.com/1.1/account/settings.json"
-        headers = {'x-client-transaction-id': base64.b64encode(f"e:/1.1/account/settings.json".encode()).decode()}
+        headers = {'x-client-transaction-id': self._encode_x_client_transaction_id("/1.1/account/settings.json")}
         response, response_json = await self.request("POST", url, headers=headers)
         self.account.username = response_json["screen_name"]
 
@@ -1203,9 +1206,10 @@ class Client(BaseHTTPClient):
         return updated
 
     async def establish_status(self):
-        url = "https://x.com/i/api/1.1/account/update_profile.json"
+        url = "https://api.x.com/i/api/1.1/account/update_profile.json"
+        headers = {'x-client-transaction-id': self._encode_x_client_transaction_id("/1.1/account/update_profile.json")}
         try:
-            await self.request("POST", url, auto_unlock=False, auto_relogin=False)
+            await self.request("POST", url, auto_unlock=False, auto_relogin=False, headers=headers)
             self.account.status = AccountStatus.GOOD
         except BadAccount:
             pass
