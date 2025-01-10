@@ -429,13 +429,13 @@ class Client(BaseHTTPClient):
         )
 
         # Первая привязка требует подтверждения
-        if redirect_after_login_url:
-            response = await self._confirm_oauth(
-                oauth_token, authenticity_token, redirect_after_login_url
-            )
-            authenticity_token, redirect_url, redirect_after_login_url = (
-                parse_oauth_html(response.text)
-            )
+        # if redirect_after_login_url:
+        response = await self._confirm_oauth(
+            oauth_token, authenticity_token, redirect_after_login_url
+        )
+        authenticity_token, redirect_url, redirect_after_login_url = (
+            parse_oauth_html(response.text)
+        )
 
         return authenticity_token, redirect_url
 
