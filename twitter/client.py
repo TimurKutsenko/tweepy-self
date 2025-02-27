@@ -178,7 +178,7 @@ class Client(BaseHTTPClient):
             if isinstance(data, dict) and "errors" in data:
                 exc = HTTPException(response, data)
 
-                if 141 in exc.api_codes or 37 in exc.api_codes:
+                if 141 in exc.api_codes or 37 in exc.api_codes or 64 in exc.api_codes:
                     self.account.status = AccountStatus.SUSPENDED
                     raise AccountSuspended(exc, self.account)
 
@@ -1210,6 +1210,12 @@ class Client(BaseHTTPClient):
         headers = {'x-client-transaction-id': self._encode_x_client_transaction_id("/1.1/account/personalization/p13n_preferences.json")}
         try:
             await self.request("GET", url, auto_unlock=False, auto_relogin=False, headers=headers)
+            await self.request(
+                "POST",
+                "https://x.com/i/api/1.1/jot/client_event.json",
+                auto_unlock=False,
+                auto_relogin=False,
+            )
             self.account.status = AccountStatus.GOOD
         except BadAccount:
             pass
