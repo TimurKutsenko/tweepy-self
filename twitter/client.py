@@ -1972,6 +1972,26 @@ class Client(BaseHTTPClient):
 
         await self._enable_totp()
 
+    async def open_account(self):
+        data = {
+            'include_mention_filter': 'true',
+            'include_nsfw_user_flag': 'true',
+            'include_nsfw_admin_flag': 'true',
+            'include_ranked_timeline': 'true',
+            'include_alt_text_compose': 'true',
+            'protected': 'true',
+        }
+
+        headers = {
+            'content-type': 'application/x-www-form-urlencoded',
+        }
+
+        response, data = await self.request("POST", 'https://api.x.com/1.1/account/settings.json', data=data, headers=headers)
+
+        if response.status_code != 200:
+            raise TwitterException(f"Failed to open account: {response.status_code}")
+
+
 
 class GQLClient:
     _GRAPHQL_URL = "https://x.com/i/api/graphql"
