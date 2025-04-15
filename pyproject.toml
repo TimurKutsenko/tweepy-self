@@ -1,14 +1,14 @@
 [tool.poetry]
-name = "tweepy-self"
-version = "1.11.4"
+name = "tweepy-self2"
+version = "1.11.5"
 description = "Twitter (selfbot) for Python!"
-authors = ["Alen <alen.kimov@gmail.com>"]
+authors = ["T1murKO", "Alen <alen.kimov@gmail.com>"]
 readme = "README.md"
-repository = "https://github.com/alenkimov/tweepy-self"
+repository = "https://github.com/TimurKutsenko/tweepy-self"
 packages = [{include = "twitter"}]
 
 [tool.poetry.urls]
-Source = "https://github.com/alenkimov/tweepy-self"
+Source = "https://github.com/TimurKutsenko/tweepy-self"
 
 [tool.poetry.dependencies]
 python = "^3.11"

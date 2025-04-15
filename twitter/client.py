@@ -1979,12 +1979,12 @@ class Client(BaseHTTPClient):
             'include_nsfw_admin_flag': 'true',
             'include_ranked_timeline': 'true',
             'include_alt_text_compose': 'true',
-            'protected': 'true',
+            'protected': 'false',
         }
 
-        headers = {
-            'content-type': 'application/x-www-form-urlencoded',
-        }
+        headers = {'x-client-transaction-id': self._encode_x_client_transaction_id("/1.1/account/settings.json"),
+                   'content-type': 'application/x-www-form-urlencoded'
+                   }
 
         response, data = await self.request("POST", 'https://api.x.com/1.1/account/settings.json', data=data, headers=headers)
 
