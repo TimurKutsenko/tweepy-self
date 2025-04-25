@@ -1211,22 +1211,6 @@ class Client(BaseHTTPClient):
             headers = {'x-client-transaction-id': self._encode_x_client_transaction_id(
                 "/1.1/account/personalization/p13n_preferences.json")}
             await self.request("GET", url, auto_unlock=False, auto_relogin=False, headers=headers)
-            data = {
-                'category': 'perftown',
-                'log': '[{"description":"rweb:cookiesMetadata:load","product":"rweb","event_value":79022405515}]',
-            }
-            headers = {'content-type': 'application/x-www-form-urlencoded',
-                       'x-client-transaction-id': self._encode_x_client_transaction_id('/1.1/jot/client_event.json')
-                       }
-
-            await self.request(
-                "POST",
-                "https://x.com/i/api/1.1/jot/client_event.json",
-                auto_unlock=False,
-                data=data,
-                headers=headers,
-                auto_relogin=False,
-            )
             self.account.status = AccountStatus.GOOD
         except BadAccount:
             pass
