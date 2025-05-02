@@ -646,7 +646,7 @@ class Client(BaseHTTPClient):
                 tweets = await self.request_tweets(self.account.id)
                 duplicate_tweet = None
                 for tweet_ in tweets:  # type: Tweet
-                    if tweet_.retweeted_tweet and tweet_.retweeted_tweet.id == tweet_id:
+                    if tweet_.retweeted_tweet and int(tweet_.retweeted_tweet.id) == int(tweet_id):
                         duplicate_tweet = tweet_
 
                 if not duplicate_tweet:
